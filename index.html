@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+<script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+<script src="https://rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
+<!--script>THREEx.ArToolkitContext.baseURL =
+ 'http://mrdoob.github.com/three.js/build/three.min.js'</script-->
+</head>
+<body style='margin : 0px; overflow: hidden;'>
+	<a-scene stats embedded arjst='sourceType: webcam;
+	detectionMode: mono; maxDetectionRate: 30; canvasWidth: 240; canvasHeight: 180'>
+    <a-assets timeout="10000">
+      <a-asset-item id="ship" src="./assets/models/ship/ship.dae"></a-asset-item>
+    </a-assets>
+		<a-circle rotation="-90 0 0" radius='.5' color="black">
+			<a-animation attribute="scale" from="0.01 0.01 0.01" to="1 1 1" dur="10000" repeat=1
+        easing="ease-in-out-circ" direction="normal"></a-animation>
+		</a-circle>
+    <a-collada-model src="#ship"></a-model>
+
+    <a-marker-camera type='pattern' patternUrl='./assets/port-marker.patt'></a-marker-camera>
+    <!--a-marker-camera preset='hiro'></a-marker-camera-->
+	</a-scene>
+</body>
+</html>
