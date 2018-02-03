@@ -15,23 +15,23 @@
     <!--a-assets timeout="10000">
       <a-asset-item id="ship" src="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/assets/models/ship/ship.dae"></a-asset-item>
     </a-assets-->
-		<a-cone radius-top="1.2" radius-bottom=".9" height=".25" rotation="0 0 0" position="0 -0.25 0.1"
+		<a-cone radius-top="1.2" radius-bottom=".9" height=".25" rotation="0 0 0" position=".75 -0.25 1"
         color="silver" side="back" open-ended="true" metalness=".5">
         	<a-animation attribute="scale" from="0.01 1 0.01" to="1 1 1" dur="15000" repeat=0
         easing="ease-in-out-circ" direction="normal"></a-animation>
-      <a-circle radius="1.4" position="0 0 0" color="black" rotation="-90 0 0">
+      <!--a-circle radius="1.4" position="0 0 0" color="black" rotation="-90 0 0">
         <a-animation attribute="scale" from="0.5 0.5 1" to="1 1 1" dur="14000" repeat=0
         easing="ease-in-out-circ" direction="normal"></a-animation>
-      </a-circle>
+      </a-circle-->
     </a-cone>
     <!--a-collada-model src="#ship" position='0 0 0'></a-model-->
 
     <!--a-entity position="0 2.25 -15" particle-system="preset: rain"></a-entity-->
     <a-sphere position="0 -1 0.1" radius=".25" visible="false">
         <a-animation attribute="visible" to="true" delay="9000" direction="normal" repeat=0></a-animation>
-        <a-animation attribute="position" from="0 -1 0.1" to="0 2 0.1" dur="5000" direction="normal"
+        <a-animation attribute="position" from=".75 -1 1" to=".75 1 1" dur="5000" direction="normal"
           repeat=0 delay="10000"></a-animation>
-        <a-animation attribute="position" from="0 2 0.1" to="0 2 -30" dur="1000" direction="normal"
+        <a-animation attribute="position" from=".75 1 1" to=".75 1 -30" dur="1000" direction="normal"
           repeat=0 delay="16000"></a-animation>
         <!--a-entity position="0 0 0" preset="dust" enabled="false"
           particle-system="rotationAngle:4.3; maxAge: 1; particleCount: 100; enabled: false"-->
@@ -40,7 +40,7 @@
         <a-cylinder radius=".5" height=".05" ></a-cylinder>
      </a-sphere>
 
-     <a-entity text-geometry="value: Christopher S Chestnut" position="0 2 0.1"
+     <a-entity text-geometry="value: Christopher S Chestnut" position="0 1 0.1"
        scale="0 0 0" rotation="45 -45 0" color="green">
        <a-animation attribute="scale" delay="16000" from="0 0 0" to="1 1 1" dur="3000"></a-animation>
      </a-entity>
