@@ -1,70 +1,63 @@
-<!DOCTYPE html>
-<head>
-<script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
 <script src="https://rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
-<script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
-<script src="./client/bundle.js"></script>
-    <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
+  <script src="threex.domevents.js"></script>
   </head>
-</head>
-<body style='margin : 0px; overflow: hidden;'>
-	<!--a-scene stats embedded arjst='sourceType: webcam;
-	detectionMode: mono; maxDetectionRate: 30; canvasWidth: 240; canvasHeight: 180'-->
-  <a-scene>
-    <!--a-assets timeout="10000">
-      <a-asset-item id="ship" src="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/assets/models/ship/ship.dae"></a-asset-item>
-    </a-assets-->
-    <a-cylinder position="0 -2 0" radius=".75" height="1.5" rotation="0 0 0"
-        color="green" metalness=".5" open-ended="true" side="double">
-        <a-entity geometry="primitive: ring; radiusInner: .5; radiusOuter: 1" 
-        material="side: double; color: green; metalness: .5" position="0 .75 0" rotation="90 0 0">
-        </a-entity>
-        <a-cylinder height="1.5" radius=".5" side="back" metalness=".5" color="silver"></a-cylinder>
-        <a-animation attribute="position" from="0 -2 0" to="0 0 0" delay="2500" dur="5000" repeat=0
-        easing="ease-in-out-circ" direction="normal"></a-animation>
-    </a-cylinder>
-    <a-plane position="0 -1 0" width="3" height="3" rotation="-90 0 0" color="black">
-      <a-animation attribute="scale" from="0 1 0" to="1 1 1" delay="0" dur="2000" repeat=0
-        easing="ease-in-out-circ" direction="normal"></a-animation>
-    </a-plane>
-    <!--a-box position="0 3 0" width="3" height="3" depth="8" visible="false" rotation="90 0 0"></a-box-->
-    <!--a-collada-model src="#ship" position='0 0 0'></a-model-->
+  <body>
+    <a-scene artoolkit>
+      <a-assets>
+        <a-asset-item id="gman" src="hollow_mask/scene.gltf"></a-asset-item>
+      </a-assets>
 
-    <!--a-entity position="0 2.25 -15" particle-system="preset: rain"></a-entity-->
-    <a-sphere position="0 -1 0" radius=".25" visible="false">
-        <a-animation attribute="visible" to="true" delay="9000" direction="normal" repeat=0></a-animation>
-        <!--a-animation attribute="position" from="0 -1 0" to="0 2 0" dur="5000" direction="normal"
-          repeat=0 delay="10000"></a-animation-->
-        <a-animation attribute="position" from="0 2 0" to="0 10 30" dur="1000" direction="normal"
-          repeat=0 delay="16000"></a-animation>
-        <!--a-entity position="0 0 0" preset="dust" enabled="false"
-          particle-system="rotationAngle:4.3; maxAge: 1; particleCount: 100; enabled: false"-->
-          <!--a-animation attribute="enabled" delay="1000" to="true" dur="1000" direction="normal" repeat=0></a-animation-->
-        <!--/a-entity-->
-        <a-cylinder radius=".5" height=".05" ></a-cylinder>
-     </a-sphere>
-     <a-sphere material-displacement
-                id="cloud"
-                scale="1 1 1"
-                radius="0.2"
-                position="0 -1 0"
-                segments-height="128"
-                segments-width="128">
-        <a-animation attribute="position" from="0 -1 0" to="0 2 0" dur="5000" direction="normal"
-          repeat=0 delay="4000"></a-animation>
-        <a-animation attribute="scale" direction="alternate-reverse" dur="2500" delay="4000"
-         from="1 1 1" to="4 4 4" repeat="indefinite"></a-animation>
-      </a-sphere>
+      <!--a-box position="0 0 1" height="1" width="1"></a-box-->
+      <a-entity geometry id='gman-id' position="0 0 1" gltf-model="#gman"
+        scale="0.5 0.5 0.5" rotation="-90">
+        <a-animation attribute="scale"
+                     begin="appear" to="2 2 2" dur="6000"></a-animation>
+      </a-entity>
+      <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
+    <a-marker preset='hiro'></a-marker>
 
-     <a-entity text-geometry="value: Chestnut" position="-1 2 -1"
-       scale="0 0 0" rotation="0 0 0" color="green">
-       <a-animation attribute="scale" delay="16000" from="0 0 0" to="1 1 2" dur="9000"></a-animation>
-     </a-entity>
+    </a-scene>
+    <script>
+      document.addEventListener('keydown', (e) => {
+        if(event.keyCode == 37) {
+          document.getElementById('gman-id').emit('appear');
+        }
+      });
+      console.log('Visible: ', document.querySelector('a-marker').object3D.visible);
 
+      document.querySelector('a-entity').addEventListener('componentchanged', (evt) => {
+        console.log('Camera Changed ',evt);
+      });
+      document.querySelector('a-entity').addEventListener('physicscollided', (evt) => {
+        console.log('Camera Physics collided ', evt);
+      });
+      document.querySelector('a-entity').addEventListener('focus', (evt) => {
+        console.log('Camera focus ', evt);
+      });
+      document.querySelector('a-entity').addEventListener('componentinitialized', (evt) => {
+        console.log('Camera init ', evt);
+      });
+      document.querySelector('a-entity').addEventListener('stateadded', (evt) => {
+        console.log('Camera state added ', evt);
+      });
+      document.querySelector('a-entity').addEventListener('stateremoved', (evt) => {
+        console.log('Camera stateremoved ', evt);
+      });
+     /* console.log('Mesh: ', document.querySelector('a-entity').object3DMap);
+      document.querySelector('a-entity').setObject3D('mesh', new THREE.Mesh());
+      console.log('Mesh: ', document.querySelector('a-entity').object3DMap);
+      let mesh = document.querySelector('a-entity').object3DMap.mesh;
+      let renderer = new THREE.WebGLRenderer();
+      let camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000)
+      let domEvents = new THREEx.DomEvents(camera, renderer.domElement);
+      domEvents.addEventListener(mesh, 'click', (evt) => {
+        console.log('Camera click ', evt);
+      }, false);*/
 
-    <!--a-marker-camera type='pattern' patternUrl='https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/assets/port-marker.patt'></a-marker-camera-->
-    <a-marker-camera preset='hiro'></a-marker-camera>
-	</a-scene>
-  <!--script src="./client/camera-logger.js"></script-->
-</body>
+      //console.log(document.querySelector('a-marker-camera').components.position);
+    </script>
+  </body>
 </html>

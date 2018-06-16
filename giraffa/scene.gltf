@@ -1,0 +1,183 @@
+{
+  "accessors": [
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 731,
+      "max": [
+        1.3334000110626221,
+        5.8616299629211426,
+        4.0204300880432129
+      ],
+      "min": [
+        -1.3955600261688232,
+        -5.9881601333618164,
+        -4.0577001571655273
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 8772,
+      "componentType": 5126,
+      "count": 731,
+      "max": [
+        0.99852043390274048,
+        0.99779760837554932,
+        0.99804747104644775
+      ],
+      "min": [
+        -0.99844151735305786,
+        -0.98718845844268799,
+        -0.99973225593566895
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 4374,
+      "max": [
+        730
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Elisabetta.Buono (https://sketchfab.com/Elisabetta.Buono)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/models/a7ff74de323f4811a95c3495dbe05f40",
+      "title": "Giraffa"
+    },
+    "generator": "Sketchfab-3.23.2",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 17496,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 17544,
+      "byteOffset": 17496,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 35040,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "Materiale",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.64000006672000087,
+          0.15166299569598704,
+          0.0082743050030802852,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.59999999999999998
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Cilindro.001_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0
+          },
+          "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "Root"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        0.077630000000000018,
+        -0.00031000000000000011,
+        -0.0013200000000000004,
+        0,
+        -0.0013100000000000004,
+        0.0025700000000000007,
+        -0.07759000000000002,
+        0,
+        0.00036000000000000008,
+        0.077600000000000016,
+        0.0025700000000000007,
+        0,
+        0.079940000000000011,
+        0.056670000000000012,
+        0.033530000000000011,
+        1
+      ],
+      "name": "Cilindro.001"
+    },
+    {
+      "mesh": 0,
+      "name": "Cilindro.001_0"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}
+
