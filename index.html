@@ -1,8 +1,26 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-<script src="https://rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
-  <script src="threex.domevents.js"></script>
+<script src="https://cdn.rawgit.com/nikolaymihaylov/AR.js/dev/aframe/build/aframe-ar.js"></script>
+  <script>
+    AFRAME.registerComponent('registerevents', {
+      init: function() {
+        var marker = this.el;
+        // Make the element emit events when found and when lost.
+  			marker.setAttribute('emitevents', 'true');
+  
+        marker.addEventListener('markerFound', () => {
+  				console.log('markerFound');
+  				// TODO: Add your own code here to react to the marker being found.
+  			});
+  
+  			marker.addEventListener('markerLost', function() {
+  				console.log('markerLost');
+  				// TODO: Add your own code here to react to the marker being lost.
+  			});
+      }
+    });
+  </script>
   </head>
   <body>
     <a-scene artoolkit>
@@ -12,12 +30,16 @@
 
       <!--a-box position="0 0 1" height="1" width="1"></a-box-->
       <a-entity geometry id='gman-id' position="0 0 1" gltf-model="#gman"
-        scale="0.5 0.5 0.5" rotation="-90">
+        scale="2 2 2" >
         <a-animation attribute="scale"
-                     begin="appear" to="2 2 2" dur="6000"></a-animation>
+                     begin="appear" to="5 5 5" dur="6000"></a-animation>
       </a-entity>
       <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
-    <a-marker preset='hiro'></a-marker>
+      
+      <a-marker-camera preset='hiro' emitevents='true'>
+      <a-marker preset='hiro' registerevents>
+      </a-marker>
+      </a-marker-camera>
 
     </a-scene>
     <script>
@@ -26,26 +48,18 @@
           document.getElementById('gman-id').emit('appear');
         }
       });
-      console.log('Visible: ', document.querySelector('a-marker').object3D.visible);
+      //let marker = document.querySelector('a-marker').object3D;
 
-      document.querySelector('a-entity').addEventListener('componentchanged', (evt) => {
-        console.log('Camera Changed ',evt);
+      /*let arContext = new THREEx.ArToolkitContext();
+      var markerControls = new THREEx.ArMarkerControls(arContext, marker, {
+        type: 'pattern',
+        patternUrl: THREEx.ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
       });
-      document.querySelector('a-entity').addEventListener('physicscollided', (evt) => {
-        console.log('Camera Physics collided ', evt);
-      });
-      document.querySelector('a-entity').addEventListener('focus', (evt) => {
-        console.log('Camera focus ', evt);
-      });
-      document.querySelector('a-entity').addEventListener('componentinitialized', (evt) => {
-        console.log('Camera init ', evt);
-      });
-      document.querySelector('a-entity').addEventListener('stateadded', (evt) => {
-        console.log('Camera state added ', evt);
-      });
-      document.querySelector('a-entity').addEventListener('stateremoved', (evt) => {
-        console.log('Camera stateremoved ', evt);
-      });
+
+      marker.addEventListener('markerFound', (e) => {
+        console.log('At last! ', e);
+      })*/
+     // console.log(marker);
      /* console.log('Mesh: ', document.querySelector('a-entity').object3DMap);
       document.querySelector('a-entity').setObject3D('mesh', new THREE.Mesh());
       console.log('Mesh: ', document.querySelector('a-entity').object3DMap);
