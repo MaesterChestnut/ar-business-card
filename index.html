@@ -11,7 +11,8 @@
 
       <!--a-box position="0 0 1" height="1" width="1"></a-box-->
       <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
-      <a-marker preset='hiro' registerevents emitevents='true'>
+      <a-marker preset='custom' type='pattern' url='https://github.com/MaesterChestnut/ar-business-card/blob/master/panther-pattern.patt'
+        registerevents emitevents='true'>
         <a-entity geometry id='gman-id' position="0 0 -1" gltf-model="#gman"
         scale="2 2 2" rotation="-90">
         <a-animation attribute="scale"
@@ -20,37 +21,6 @@
       </a-marker>
 
     </a-scene>
-    <script>
-      document.addEventListener('keydown', (e) => {
-        if(event.keyCode == 37) {
-          document.getElementById('gman-id').emit('appear');
-        }
-      });
-      //let marker = document.querySelector('a-marker').object3D;
-
-      /*let arContext = new THREEx.ArToolkitContext();
-      var markerControls = new THREEx.ArMarkerControls(arContext, marker, {
-        type: 'pattern',
-        patternUrl: THREEx.ArToolkitContext.baseURL + 'examples/marker-training/examples/pattern-files/pattern-hiro.patt'
-      });
-
-      marker.addEventListener('markerFound', (e) => {
-        console.log('At last! ', e);
-      })*/
-     // console.log(marker);
-     /* console.log('Mesh: ', document.querySelector('a-entity').object3DMap);
-      document.querySelector('a-entity').setObject3D('mesh', new THREE.Mesh());
-      console.log('Mesh: ', document.querySelector('a-entity').object3DMap);
-      let mesh = document.querySelector('a-entity').object3DMap.mesh;
-      let renderer = new THREE.WebGLRenderer();
-      let camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000)
-      let domEvents = new THREEx.DomEvents(camera, renderer.domElement);
-      domEvents.addEventListener(mesh, 'click', (evt) => {
-        console.log('Camera click ', evt);
-      }, false);*/
-
-      //console.log(document.querySelector('a-marker-camera').components.position);
-    </script>
     <script>
     AFRAME.registerComponent('registerevents', {
       init: function() {
