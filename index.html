@@ -1,22 +1,35 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-<script src="https://cdn.rawgit.com/nikolaymihaylov/AR.js/dev/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.rawgit.com/nikolaymihaylov/AR.js/dev/aframe/build/aframe-ar.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
   </head>
   <body>
     <a-scene embedded arjs='sourceType: webcam'>
       <a-assets>
-        <a-asset-item id="gman" src="hollow_mask/scene.gltf"></a-asset-item>
+        <a-asset-item id="hollow" src="gltfModels/hollow_mask/scene.gltf"></a-asset-item>
+        <!--audio id="appear" src="appear.wav" preload="auto"></audio-->
+        <a-asset-item id="shenron" src="gltfModels/shenron/scene.gltf"></a-asset-item>
+        <a-asset-item id="chest" src="gltfModels/treasure_chest/scene.gltf"></a-asset-item>
+        <a-asset-item id="spell" src="gltfModels/spell/scene.gltf"></a-asset-item>
+
       </a-assets>
 
       <!--a-box position="0 0 1" height="1" width="1"></a-box-->
       <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
-      <a-marker preset='custom' type='pattern' url='https://github.com/MaesterChestnut/ar-business-card/blob/master/panther-pattern.patt'
-        registerevents emitevents='true'>
-        <a-entity geometry id='gman-id' position="0 0 -1" gltf-model="#gman"
+      <a-marker preset='hiro' registerevents emitevents='true'>
+        <!--a-entity geometry id='gman' position="0 0 -1" gltf-model="#gman"
         scale="2 2 2" rotation="-90">
-        <a-animation attribute="scale"
+          <a-animation id='appear-anim' attribute="scale"
                      begin="appear" to="5 5 5" dur="6000"></a-animation>
+        </a-entity-->
+        <!--a-entity animation-mixer id="shenron" rotation="-90" position="0 0 -1" gltf-model="#shenron" scale=".1 .1 .1">
+        </a-entity-->
+        <a-entity animation-mixer id="spell" rotation="90" scale=".01 .01 1"
+          position="0 0 -2" gltf-model="#spell">
+          <a-animation id='spell-appear' attribute="scale"
+              begin="spell-appear" to=".1 .1 1" dur="6000">
+          </a-animation>
         </a-entity>
       </a-marker>
 
@@ -25,18 +38,24 @@
     AFRAME.registerComponent('registerevents', {
       init: function() {
         var marker = this.el;
+        var spellEntity = document.getElementById('spell');
+        var spellAnimation = document.querySelector('#spell-appear');
+        var animStatus = false;
+        //var sound = document.querySelector('[sound]');
         // Make the element emit events when found and when lost.
   			marker.setAttribute('emitevents', 'true');
-  
         marker.addEventListener('markerFound', () => {
-  				console.log('markerFound');
-  				// TODO: Add your own code here to react to the marker being found.
+          if(!animStatus){
+            spellAnimation.emit('spell-appear');
+          }
   			});
-  
+
+        spellAnimation.addEventListener('animationend', () => {
+          animStatus = true;
+        });
+
   			marker.addEventListener('markerLost', function() {
-  				console.log('markerLost');
-          document.getElementById('gman-id').emit('appear');
-  				// TODO: Add your own code here to react to the marker being lost.
+          //if ends mid appearance - scratch sound
   			});
       }
     });
