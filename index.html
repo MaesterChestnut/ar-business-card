@@ -32,7 +32,7 @@
           </a-animation>
         </a-entity>
 
-        <a-entity animation-mixer="clip: Open" id="chest" rotation="-90"
+        <a-entity anim-control animation-mixer="clip: static pose" id="chest" 
                   position="0 0 -2" gltf-model="#chest-asset" scale=".001 .001 .001">
           <a-animation id="chest-appear" attribute="scale"
                   to=".01 .01 .01" dur="4000" begin="chest-appear">
@@ -48,14 +48,9 @@
         var spellEntity = document.getElementById('spell');
         var spellAnimation = document.querySelector('#spell-appear');
         var chestAnimation = document.querySelector('#chest-appear');
-        var chest = document.querySelector('#chest');
-
         var animStatus = false;
         //var sound = document.querySelector('[sound]');
         // Make the element emit events when found and when lost.
-        console.log('Chest: ', chest.components);
-        console.log('Marker ', marker);
-        chest.setAttribute('animation-mixer', {clip: 'Open'});
   			marker.setAttribute('emitevents', 'true');
         marker.addEventListener('markerFound', () => {
           if(!animStatus){
@@ -65,8 +60,7 @@
 
         spellAnimation.addEventListener('animationend', () => {
           animStatus = true;
-          chestAnimation.emit('chest-appear');
-          chest.play();
+          chestAnimation.emit("chest-appear");
         });
 
   			marker.addEventListener('markerLost', function() {
@@ -76,11 +70,18 @@
     });
   </script>
   <script>
-    var chestAnimation = document.querySelector('#chest-appear');
-    var chest = document.querySelector('#chest');
-    chestAnimation.addEventListener('animationend', () => {
-      //chest.setAttribute('animation-mixer', "clip: `Open`");
-      //chest.animation-mixer.clip = "Open";
+    AFRAME.registerComponent('anim-control', {
+      init: function() {
+        var chestAnimation = document.querySelector('#chest-appear');
+        var chest = document.querySelector('#chest');
+        chestAnimation.addEventListener('animationend', () => {
+          chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+        });
+        chest.addEventListener('animation-loop', (action) => {
+          action.detail.action.clampWhenFinished = true;
+        });
+        this.el.clampWhenFinished = true;
+      }
     });
   </script>
   </body>
