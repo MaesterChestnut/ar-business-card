@@ -9,9 +9,11 @@
       <a-assets>
         <a-asset-item id="hollow" src="gltfModels/hollow_mask/scene.gltf"></a-asset-item>
         <!--audio id="appear" src="appear.wav" preload="auto"></audio-->
-        <a-asset-item id="shenron" src="gltfModels/shenron/scene.gltf"></a-asset-item>
+        <a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item>
         <a-asset-item id="chest-asset" src="gltfModels/treasure_chest/scene.gltf"></a-asset-item>
         <a-asset-item id="spell-asset" src="gltfModels/spell/scene.gltf"></a-asset-item>
+        <a-asset-item id="tentacle-asset" src="gltfModels/tentacle/scene.gltf"></a-asset-item>
+        <a-asset-item id="snitch-asset" src="gltfModels/snitch/scene.gltf"></a-asset-item>
 
       </a-assets>
 
@@ -70,17 +72,41 @@
     });
   </script>
   <script>
+    var modelMap = {
+      'shenron': {
+        'gltf-model': '#shenron-asset',
+        'scale': '.1 .1 .1',
+        'animation-mixer': true
+      },
+      'tentacle': {
+        'gltf-model': '#tentacle-asset',
+        'scale': '.1 .5 .1',
+        'animation-mixer': true
+      }
+    };
     AFRAME.registerComponent('anim-control', {
       init: function() {
         var chestAnimation = document.querySelector('#chest-appear');
         var chest = document.querySelector('#chest');
+        var sceneEl = document.querySelector('a-marker');
+        //trigger chest opening
         chestAnimation.addEventListener('animationend', () => {
           chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
         });
         chest.addEventListener('animation-loop', (action) => {
           action.detail.action.clampWhenFinished = true;
         });
-        this.el.clampWhenFinished = true;
+        chest.addEventListener('animation-finished', () => {
+          var el = document.createElement('a-entity');
+          //select modelmap
+          var model = modelMap['tentacle'];
+          for (var key in model) {
+            console.log('Key: ', key, ' prop: ', model[key]);
+            el.setAttribute(key, model[key]);
+          }
+          el.setAttribute('position', {x: 0, y: 1, z: -2});
+          sceneEl.append(el);
+        });
       }
     });
   </script>
