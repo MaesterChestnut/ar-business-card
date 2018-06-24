@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/nikolaymihaylov/AR.js/dev/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
   </head>
@@ -28,16 +28,16 @@
         <!--a-entity animation-mixer id="shenron" rotation="-90" position="0 0 -1" gltf-model="#shenron" scale=".1 .1 .1">
         </a-entity-->
         <a-entity animation-mixer id="spell" rotation="90" scale=".01 .01 1"
-          position="0 0 -2" gltf-model="#spell-asset">
+          position="0 0 0" gltf-model="#spell-asset">
           <a-animation id='spell-appear' attribute="scale"
               begin="spell-appear" to=".1 .1 1" dur="6000">
           </a-animation>
         </a-entity>
 
-        <a-entity anim-control animation-mixer="clip: static pose" id="chest" 
-                  position="0 0 -2" gltf-model="#chest-asset" scale=".001 .001 .001">
+        <a-entity anim-control animation-mixer="clip: static pose" id="chest"
+                  position="0 0 0" gltf-model="#chest-asset" scale=".001 .001 .001">
           <a-animation id="chest-appear" attribute="scale"
-                  to=".01 .01 .01" dur="4000" begin="chest-appear">
+                  to=".008 .008 .008" dur="4000" begin="chest-appear">
           </a-animation>
         </a-entity>
       </a-marker>
@@ -104,7 +104,7 @@
             console.log('Key: ', key, ' prop: ', model[key]);
             el.setAttribute(key, model[key]);
           }
-          el.setAttribute('position', {x: 0, y: 1, z: -2});
+          el.setAttribute('position', {x: 0, y: 1, z: 0});
           sceneEl.append(el);
         });
       }
