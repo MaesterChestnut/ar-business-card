@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/MaesterChestnut/AR.js/mergeBranch/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
   </head>
@@ -9,11 +9,12 @@
       <a-assets>
         <!--a-asset-item id="hollow" src="gltfModels/hollow_mask/scene.gltf"></a-asset-item-->
         <!--audio id="appear" src="appear.wav" preload="auto"></audio-->
-        <!--a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item-->
+        <a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item>
         <a-asset-item id="chest-asset" src="gltfModels/treasure_chest/scene.gltf"></a-asset-item>
         <a-asset-item id="spell-asset" src="gltfModels/spell/scene.gltf"></a-asset-item>
         <a-asset-item id="tentacle-asset" src="gltfModels/tentacle/scene.gltf"></a-asset-item>
-        <!--a-asset-item id="snitch-asset" src="gltfModels/snitch/scene.gltf"></a-asset-item-->
+        <a-asset-item id="snitch-asset" src="gltfModels/snitch/scene.gltf"></a-asset-item>
+        <a-asset-item id="r2-asset" src="gltfModels/r2/scene.gltf"></a-asset-item>
 
       </a-assets>
 
@@ -73,7 +74,7 @@
   </script>
   <script>
     var modelMap = {
-      'shenron': {
+      'dragon': {
         'gltf-model': '#shenron-asset',
         'scale': '.1 .1 .1',
         'animation-mixer': true
@@ -82,6 +83,45 @@
         'gltf-model': '#tentacle-asset',
         'scale': '.1 .5 .1',
         'animation-mixer': true
+      },
+      'gold': {
+        'gltf-model': '#snitch-asset',
+        'scale': '.001 .001 .001',
+        'animation-mixer': true
+      },
+      'R2': {
+        'gltf-model': '#r2-asset',
+        'scale': '.1 .1 .1',
+        'animation-mixer': true
+      }
+    };
+    var modelVoice;
+    var chestCommands = {
+      'opensasame': () => {
+        //summon random model
+        chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+        modelVoice = modelMap['tentacle'];
+      },
+      'dragon arise': () => {
+        chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+        modelVoice = modelMap['shrenron'];
+      },
+      'open (up)': () => {
+        chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+        modelVoice = modelMap['goblin'];
+      },
+      'let the games begin': () => {
+        chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+        modelVoice = modelMap['gold'];
+      },
+      'I\'ve gotta bad feeling about this': () => {
+        chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+        modelVoice = modelMap['R2'];
+      },
+      'show me *tag': (tag) => {
+        chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+        console.log('Summoning ', tag);
+        modelVoice = modelMap[tag];
       }
     };
     AFRAME.registerComponent('anim-control', {
@@ -91,15 +131,20 @@
         var sceneEl = document.querySelector('a-marker');
         //trigger chest opening
         chestAnimation.addEventListener('animationend', () => {
-          chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+          if (annyang) {
+            annyang.addCommands(chestCommands);
+            annyang.start();
+          } else {
+            chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
+          }
         });
         chest.addEventListener('animation-loop', (action) => {
           action.detail.action.clampWhenFinished = true;
         });
         chest.addEventListener('animation-finished', () => {
           var el = document.createElement('a-entity');
-          //select modelmap
-          var model = modelMap['tentacle'];
+          //select modelmap; need to handle if chest isn't open
+          var model = modelVoice ? modelVoice : modelMap['tentacle'];
           for (var key in model) {
             console.log('Key: ', key, ' prop: ', model[key]);
             el.setAttribute(key, model[key]);
@@ -110,5 +155,6 @@
       }
     });
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
   </body>
 </html>
