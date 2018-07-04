@@ -42,7 +42,7 @@
         var spellEntity = document.getElementById('spell');
         var spellAnimation = document.querySelector('#spell-appear');
         var chestAnimation = document.querySelector('#chest-appear');;
-        var chest = document.querySelector('#chest');
+        //var chest = document.querySelector('#chest');
         var animStatus = false;
         //var sound = document.querySelector('[sound]');
         // Make the element emit events when found and when lost.
@@ -143,6 +143,9 @@
           }
           el.setAttribute('position', {x: 0, y: 1, z: 0});
           sceneEl.append(el);
+          if (annyang) {
+            annyang.abort();
+          }
         });
       }
     });
