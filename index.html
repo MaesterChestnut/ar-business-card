@@ -18,23 +18,14 @@
 
       </a-assets>
 
-      <!--a-box position="0 0 1" height="1" width="1"></a-box-->
       <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
       <a-marker preset='hiro' registerevents emitevents='true'>
-        <!--a-entity geometry id='gman' position="0 0 -1" gltf-model="#gman"
-        scale="2 2 2" rotation="-90">
-          <a-animation id='appear-anim' attribute="scale"
-                     begin="appear" to="5 5 5" dur="6000"></a-animation>
-        </a-entity-->
-        <!--a-entity animation-mixer id="shenron" rotation="-90" position="0 0 -1" gltf-model="#shenron" scale=".1 .1 .1">
-        </a-entity-->
         <a-entity animation-mixer id="spell" rotation="90" scale=".01 .01 1"
           position="0 0 0" gltf-model="#spell-asset">
           <a-animation id='spell-appear' attribute="scale"
               begin="spell-appear" to=".1 .1 1" dur="6000">
           </a-animation>
         </a-entity>
-
         <a-entity anim-control animation-mixer="clip: static pose" id="chest"
                   position="0 0 0" gltf-model="#chest-asset" scale=".001 .001 .001">
           <a-animation id="chest-appear" attribute="scale"
@@ -42,7 +33,7 @@
           </a-animation>
         </a-entity>
       </a-marker>
-
+      <a-camera-static/>
     </a-scene>
     <script>
     AFRAME.registerComponent('registerevents', {
@@ -50,7 +41,8 @@
         var marker = this.el;
         var spellEntity = document.getElementById('spell');
         var spellAnimation = document.querySelector('#spell-appear');
-        var chestAnimation = document.querySelector('#chest-appear');
+        var chestAnimation = document.querySelector('#chest-appear');;
+        var chest = document.querySelector('#chest');
         var animStatus = false;
         //var sound = document.querySelector('[sound]');
         // Make the element emit events when found and when lost.
