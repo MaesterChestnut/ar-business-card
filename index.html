@@ -3,19 +3,54 @@
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/MaesterChestnut/AR.js/mergeBranch/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+    <style>
+     /* #overlay-wrapper {
+        position: absolute;
+        top: 0px;
+        height: 100%;
+        width: 100%;
+        background-color: lavenderblush;
+        display: none;
+      }
+
+      #text-wrapper {
+        height: 100%;
+        width: 80%;
+        background-color: lightblue;
+        margin-left: auto;
+        margin-right: auto;
+        top: 0;
+      }*/
+
+      #arjsDebugUIContainer {
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    <a-scene embedded arjs='sourceType: webcam'>
-      <a-assets>
+    <div id='overlay-wrapper'>
+      <div id='text-wrapper'>
+        <div id='title-wrapper'>
+        </div>
+        <div id='instruction-wrapper'>
+        </div>
+        <div id='interactive-wrapper'>
+        </div>
+      </div>
+    </div>
+    <a-scene embedded vr-mode-ui='enabled: false'
+      arjs='sourceType: webcam'>
+      <a-assets id="critical-assets">
         <!--a-asset-item id="hollow" src="gltfModels/hollow_mask/scene.gltf"></a-asset-item-->
         <!--audio id="appear" src="appear.wav" preload="auto"></audio-->
-        <a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item>
         <a-asset-item id="chest-asset" src="gltfModels/treasure_chest/scene.gltf"></a-asset-item>
         <a-asset-item id="spell-asset" src="gltfModels/spell/scene.gltf"></a-asset-item>
+      </a-assets>
+      <a-assets timeout="7000" id="inner-assets">
         <a-asset-item id="tentacle-asset" src="gltfModels/tentacle/scene.gltf"></a-asset-item>
         <a-asset-item id="snitch-asset" src="gltfModels/snitch/scene.gltf"></a-asset-item>
         <a-asset-item id="r2-asset" src="gltfModels/r2/scene.gltf"></a-asset-item>
-
+        <a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item>
       </a-assets>
 
       <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
@@ -35,6 +70,14 @@
       </a-marker>
       <a-camera-static/>
     </a-scene>
+    <script>
+        var assets = document.querySelectorAll('a-assets');
+        assets.forEach((asset) => {
+            asset.addEventListener('loaded', () => {
+              console.log('Assets Loaded: ', asset);
+            })
+          });
+    </script>
     <script>
     AFRAME.registerComponent('registerevents', {
       init: function() {
@@ -67,22 +110,22 @@
   <script>
     var modelMap = {
       'dragon': {
-        'gltf-model': '#shenron-asset',
+        'gltf-model': 'gltfModels/shenron/scene.gltf',
         'scale': '.1 .1 .1',
         'animation-mixer': true
       },
       'tentacle': {
-        'gltf-model': '#tentacle-asset',
+        'gltf-model': 'gltfModels/tentacle/scene.gltf',
         'scale': '.1 .5 .1',
         'animation-mixer': true
       },
       'gold': {
-        'gltf-model': '#snitch-asset',
+        'gltf-model': 'gltfModels/snitch/scene.gltf',
         'scale': '.001 .001 .001',
         'animation-mixer': true
       },
       'R2': {
-        'gltf-model': '#r2-asset',
+        'gltf-model': 'gltfModels/r2/scene.gltf',
         'scale': '.1 .1 .1',
         'animation-mixer': true
       }
@@ -143,9 +186,6 @@
           }
           el.setAttribute('position', {x: 0, y: 1, z: 0});
           sceneEl.append(el);
-          if (annyang) {
-            annyang.abort();
-          }
         });
       }
     });
