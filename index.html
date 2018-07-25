@@ -47,10 +47,10 @@
         <a-asset-item id="spell-asset" src="gltfModels/spell/scene.gltf"></a-asset-item>
       </a-assets>
       <a-assets timeout="7000" id="inner-assets">
-        <a-asset-item id="tentacle-asset" src="gltfModels/tentacle/scene.gltf"></a-asset-item>
+        <!--a-asset-item id="tentacle-asset" src="gltfModels/tentacle/scene.gltf"></a-asset-item>
         <a-asset-item id="snitch-asset" src="gltfModels/snitch/scene.gltf"></a-asset-item>
         <a-asset-item id="r2-asset" src="gltfModels/r2/scene.gltf"></a-asset-item>
-        <a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item>
+        <a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item-->
       </a-assets>
 
       <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
@@ -177,7 +177,7 @@
           action.detail.action.clampWhenFinished = true;
         });
         chest.addEventListener('animation-finished', () => {
-          var el = document.createElement('a-entity');
+        /*  var el = document.createElement('a-entity');
           //select modelmap; need to handle if chest isn't open
           var model = modelVoice ? modelVoice : modelMap['tentacle'];
           for (var key in model) {
@@ -185,7 +185,7 @@
             el.setAttribute(key, model[key]);
           }
           el.setAttribute('position', {x: 0, y: 1, z: 0});
-          sceneEl.append(el);
+          sceneEl.append(el);*/
         });
       }
     });
