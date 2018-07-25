@@ -77,6 +77,11 @@
               console.log('Assets Loaded: ', asset);
             })
           });
+        var scene = document.querySelector('a-scene');
+        let params = (new URL(document.location)).searchParams;
+        if(params.get('stats') === "true") {
+          scene.setAttribute('stats', true);
+        }
     </script>
     <script>
     AFRAME.registerComponent('registerevents', {
@@ -110,22 +115,22 @@
   <script>
     var modelMap = {
       'dragon': {
-        'gltf-model': 'gltfModels/shenron/scene.gltf',
+        'gltf-model': 'url("gltfModels/shenron/scene.gltf")',
         'scale': '.1 .1 .1',
         'animation-mixer': true
       },
       'tentacle': {
-        'gltf-model': 'gltfModels/tentacle/scene.gltf',
+        'gltf-model': 'url(gltfModels/tentacle/scene.gltf)',
         'scale': '.1 .5 .1',
         'animation-mixer': true
       },
       'gold': {
-        'gltf-model': 'gltfModels/snitch/scene.gltf',
+        'gltf-model': 'url(gltfModels/snitch/scene.gltf)',
         'scale': '.001 .001 .001',
         'animation-mixer': true
       },
       'R2': {
-        'gltf-model': 'gltfModels/r2/scene.gltf',
+        'gltf-model': 'url(gltfModels/r2/scene.gltf)',
         'scale': '.1 .1 .1',
         'animation-mixer': true
       }
