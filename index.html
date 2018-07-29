@@ -46,12 +46,12 @@
         <a-asset-item id="chest-asset" src="gltfModels/treasure_chest/scene.gltf"></a-asset-item>
         <a-asset-item id="spell-asset" src="gltfModels/spell/scene.gltf"></a-asset-item>
       </a-assets>
-      <!--a-assets timeout="7000" id="inner-assets">
+      <a-assets timeout="10" id="inner-assets">
         <a-asset-item id="tentacle-asset" src="gltfModels/tentacle/scene.gltf"></a-asset-item>
         <a-asset-item id="snitch-asset" src="gltfModels/snitch/scene.gltf"></a-asset-item>
         <a-asset-item id="r2-asset" src="gltfModels/r2/scene.gltf"></a-asset-item>
         <a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item>
-      </a-assets-->
+      </a-assets>
 
       <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
       <a-marker preset='hiro' registerevents emitevents='true'>
@@ -115,22 +115,26 @@
   <script>
     var modelMap = {
       'dragon': {
-        'gltf-model': 'url(gltfModels/shenron/scene.gltf)',
+        //'gltf-model': 'url(gltfModels/shenron/scene.gltf)',
+        'gltf-model': '#shenron-asset',
         'scale': '.1 .1 .1',
         'animation-mixer': true
       },
       'tentacle': {
-        'gltf-model': 'url(gltfModels/tentacle/scene.gltf)',
+        //'gltf-model': 'url(gltfModels/tentacle/scene.gltf)',
+        'gltf-model': '#tentacle-asset',
         'scale': '.1 .5 .1',
         'animation-mixer': true
       },
       'gold': {
-        'gltf-model': 'url(gltfModels/snitch/scene.gltf)',
+        //'gltf-model': 'url(gltfModels/snitch/scene.gltf)',
+        'gltf-model': '#snitch-asset'
         'scale': '.001 .001 .001',
         'animation-mixer': true
       },
       'R2': {
-        'gltf-model': 'url(gltfModels/r2/scene.gltf)',
+        //'gltf-model': 'url(gltfModels/r2/scene.gltf)',
+        'gltf-model': '#r2-asset',
         'scale': '.1 .1 .1',
         'animation-mixer': true
       }
@@ -162,6 +166,14 @@
         chest.setAttribute('animation-mixer', "clip: *; loop: pingpong; repetitions: 1");
         console.log('Summoning ', tag);
         modelVoice = modelMap[tag];
+      },
+      'another one': () => {
+        chest.setAttribute('animation-mixer', "clip: static pose; loop: pingpong; repetitions: 1");
+        console.log('Resetting');
+        let summoned = document.querySelector('#summonedEntity');
+        if (summoned) {
+          summoned.setAttribute('position', {x: 0, y: 1, z: 9999});
+        }
       }
     };
     AFRAME.registerComponent('anim-control', {
@@ -189,11 +201,14 @@
             console.log('Key: ', key, ' prop: ', model[key]);
             el.setAttribute(key, model[key]);
           }
+          el.setAttribute('id', 'summonedEntity');
           el.setAttribute('position', {x: 0, y: 1, z: 0});
           sceneEl.append(el);
         });
       }
     });
+
+
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
   </body>
