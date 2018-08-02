@@ -1,16 +1,32 @@
 <html>
+  <!--
+    TODO:
+    - optimize page loading
+    - custom pattern
+    - overlay loading screen
+    - Help button for instructions
+    - Chestnuts Roasting
+      - chest animation
+      - flame animations
+      - nut animation
+      - name displayed
+    - desktop vs mobile display
+    - unlockable masks unique to cards
+    -->
   <head>
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/MaesterChestnut/AR.js/mergeBranch/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
     <style>
-     /* #overlay-wrapper {
-        position: absolute;
-        top: 0px;
-        height: 100%;
-        width: 100%;
-        background-color: lavenderblush;
-        display: none;
+      /*#overlay-wrapper {
+        height: 500px;
+        width: 500px;
+        background-color: gray;
+        opacity: .5;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: -500px;
       }
 
       #text-wrapper {
@@ -38,6 +54,7 @@
         </div>
       </div>
     </div>
+    <!--div id=''-->
     <a-scene embedded vr-mode-ui='enabled: false'
       arjs='sourceType: webcam'>
       <a-assets id="critical-assets">
@@ -51,6 +68,7 @@
         <a-asset-item id="snitch-asset" src="gltfModels/snitch/scene.gltf"></a-asset-item>
         <a-asset-item id="r2-asset" src="gltfModels/r2/scene.gltf"></a-asset-item>
         <a-asset-item id="shenron-asset" src="gltfModels/shenron/scene.gltf"></a-asset-item>
+        <!--a-asset-item id="flame-asset" src="gltfModels/small_fire/scene.gltf"></a-asset-item-->
       </a-assets>
 
       <!--a-marker-camera preset='custom' type='pattern' url="https://s3.amazonaws.com/aws-website-chestnutmeansbusiness-l2ucx/panther-pattern.patt"></a-marker-camera-->
@@ -66,6 +84,10 @@
           <a-animation id="chest-appear" attribute="scale"
                   to=".008 .008 .008" dur="4000" begin="chest-appear">
           </a-animation>
+          <!--a-animation id="chest-sink" attribute="position" to="0 -4 0" dur="4000"
+            begin="chest-away">
+          </a-animation>
+          <a-animation attribute="visible" dur="4000" to="false" begin="chest-away"></a-animation-->
         </a-entity>
       </a-marker>
       <a-camera-static/>
@@ -89,7 +111,7 @@
         var marker = this.el;
         var spellEntity = document.getElementById('spell');
         var spellAnimation = document.querySelector('#spell-appear');
-        var chestAnimation = document.querySelector('#chest-appear');;
+        var chestAnimation = document.querySelector('#chest-appear');
         //var chest = document.querySelector('#chest');
         var animStatus = false;
         //var sound = document.querySelector('[sound]');
@@ -113,6 +135,7 @@
     });
   </script>
   <script>
+    var chestAnimation = document.querySelector('#chest');
     var modelMap = {
       'dragon': {
         //'gltf-model': 'url(gltfModels/shenron/scene.gltf)',
@@ -128,7 +151,7 @@
       },
       'gold': {
         //'gltf-model': 'url(gltfModels/snitch/scene.gltf)',
-        'gltf-model': '#snitch-asset'
+        'gltf-model': '#snitch-asset',
         'scale': '.001 .001 .001',
         'animation-mixer': true
       },
@@ -170,11 +193,17 @@
       'another one': () => {
         chest.setAttribute('animation-mixer', "clip: static pose; loop: pingpong; repetitions: 1");
         console.log('Resetting');
-        let summoned = document.querySelector('#summonedEntity');
+        let summoned = document.querySelectorAll('.summonedEntity');
         if (summoned) {
-          summoned.setAttribute('position', {x: 0, y: 1, z: 9999});
+          summoned.forEach( (elem) => {
+            elem.setAttribute('position', {x: 0, y: 1, z: 9999});
+          });
         }
-      }
+      }/*,
+      'chestnuts roasting': () => {
+        console.log('chestnut recog');
+        chestAnimation.emit('chest-away');
+      }*/
     };
     AFRAME.registerComponent('anim-control', {
       init: function() {
@@ -201,7 +230,7 @@
             console.log('Key: ', key, ' prop: ', model[key]);
             el.setAttribute(key, model[key]);
           }
-          el.setAttribute('id', 'summonedEntity');
+          el.setAttribute('class', 'summonedEntity');
           el.setAttribute('position', {x: 0, y: 1, z: 0});
           sceneEl.append(el);
         });
