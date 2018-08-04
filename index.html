@@ -5,6 +5,9 @@
     - custom pattern
     - overlay loading screen
     - Help button for instructions
+      - toggle button :check:
+      - animation for text
+      - text itself
     - Chestnuts Roasting
       - chest animation
       - flame animations
@@ -27,16 +30,22 @@
         margin-left: auto;
         margin-right: auto;
         margin-bottom: -500px;
-      }
-
-      #text-wrapper {
-        height: 100%;
-        width: 80%;
-        background-color: lightblue;
-        margin-left: auto;
-        margin-right: auto;
-        top: 0;
       }*/
+
+      #interactive-wrapper {
+        height: 70px;
+        width: 70px;
+        background-color: skyblue;
+        border-radius: 50%;
+        border: 3px solid black;
+        bottom: 10px;
+        right: 10px;
+        position: absolute;
+        text-align: -webkit-center;
+        z-index: 5;
+        font-size: 40px;
+        line-height: 60px;
+      }
 
       #arjsDebugUIContainer {
         display: none;
@@ -51,6 +60,7 @@
         <div id='instruction-wrapper'>
         </div>
         <div id='interactive-wrapper'>
+          ?
         </div>
       </div>
     </div>
@@ -104,6 +114,15 @@
         if(params.get('stats') === "true") {
           scene.setAttribute('stats', true);
         }
+        var instructionMenu = document.querySelector('#instruction-wrapper');
+        document.querySelector('#interactive-wrapper').addEventListener('click', () => {
+          if (instructionMenu.className.indexOf('open') >= 0) {
+            instructionMenu.classList.replace('open', 'close');
+          } else {
+            instructionMenu.classList.add('open');
+            instructionMenu.classList.remove('close');
+          }
+        });
     </script>
     <script>
     AFRAME.registerComponent('registerevents', {
